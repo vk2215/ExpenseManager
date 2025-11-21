@@ -1,0 +1,53 @@
+package com.example.moneymanager.entity;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.Builder;
+
+import java.time.LocalDateTime;
+
+import org.hibernate.annotations.CreationTimestamp;
+
+
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+@Entity
+@Table(name="tbl_profiles")
+public class ProfileEntity {
+    
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String fullName;
+    @Column(unique = true)
+    private String email;
+    private String password;
+    private String profileImageUrl;
+    @Column(updatable = false)
+    @CreationTimestamp
+    private LocalDateTime createdAt;
+    @CreationTimestamp
+    private LocalDateTime updatedAt;
+    private Boolean isActive;
+    private String activationToken;
+
+    @PrePersist
+    public void prePersist(){
+        if(this.isActive == null){
+            isActive = false;
+        }
+    }
+    
+
+}
