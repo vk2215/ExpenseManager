@@ -1,26 +1,20 @@
-# ===========================
-# Stage 1: Build JAR using Maven
-# ===========================
+# Stage 1 - Build
 FROM eclipse-temurin:21-jdk AS builder
-
 WORKDIR /app
 
-# Copy all project files
 COPY . .
 
-# Build the project (skip tests for faster build)
+# Give execute permission
+RUN chmod +x mvnw
+
+# Build project
 RUN ./mvnw clean package -DskipTests
 
-# ===========================
-# Stage 2: Run JAR
-# ===========================
+# Stage 2 - Run
 FROM eclipse-temurin:21-jre
-
 WORKDIR /app
 
-# Copy JAR file from builder stage
-COPY --from=builder /app/target/moneymanager-0.0.1-SNAPSHOT.jar moneymanager-v1.0.jar
+COPY --from=builder /app/target/*.jar app.jar
 
 EXPOSE 9090
-
-ENTRYPOINT ["java", "-jar", "moneymanager-v1.0.jar"]
+ENTRYPOINT ["java","-jar","app.jar"]
