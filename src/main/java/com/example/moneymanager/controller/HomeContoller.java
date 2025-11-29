@@ -9,8 +9,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class HomeContoller {
 
     @GetMapping
-    public String healthCheck(){
+    public String healthCheck() {
         return "Application is running";
+    }
+    @GetMapping("/")
+    public String home() {
+        return "Money Manager Backend is Live!";
     }
 
 }

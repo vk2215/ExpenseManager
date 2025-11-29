@@ -22,6 +22,11 @@ public class ProfileController {
 
     private final ProfileService profileService;
 
+    @GetMapping("/")
+    public String home() {
+        return "Money Manager Backend is Live! (ProfileController)";
+    }
+
     @PostMapping("/register")
     public ResponseEntity<ProfileDTO> registerProfile(@RequestBody ProfileDTO profileDTO){
         ProfileDTO registeredProfile = profileService.registerProfile(profileDTO);
