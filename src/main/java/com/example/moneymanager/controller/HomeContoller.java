@@ -12,9 +12,4 @@ public class HomeContoller {
     public String healthCheck() {
         return "Application is running";
     }
-    @GetMapping("/")
-    public String home() {
-        return "Money Manager Backend is Live!";
-    }
-
 }
